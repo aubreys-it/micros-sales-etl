@@ -1,5 +1,6 @@
 import logging
 import csv
+import json
 import pandas as pd
 import azure.functions as func
 from azure.storage.blob import ContainerClient
@@ -62,3 +63,13 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             blob_client.upload_blob(data=df.to_csv(index=False, header=False))
 
             return_dict['func_return'] = 'True'
+
+    else:
+        return_dict['func_return'] = False
+
+    return func.HttpResponse(
+        json.dumps(
+            return_dict
+        ),
+        mimetype='application/json'
+    )

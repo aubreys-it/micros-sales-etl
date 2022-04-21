@@ -5,3 +5,5 @@
 azure-functions
 pandas
 azure-storage-blob
+datetime
+simplejson
