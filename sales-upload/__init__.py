@@ -10,7 +10,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
     xlsURI = req.params.get("uri")
-    csvSAS = req.param.get("sas")
+    csvSAS = '?' + req.param.get("sas").replace('_', '&')
     csvURI = "https://domesdaydiag.blob.core.windows.net/product-mix"
     return_dict = {}
 
