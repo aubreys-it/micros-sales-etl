@@ -1,5 +1,4 @@
 import logging
-import os
 import csv
 import pandas as pd
 import azure.functions as func
