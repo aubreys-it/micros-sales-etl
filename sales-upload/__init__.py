@@ -1,5 +1,6 @@
 import logging
 import json
+import urllib
 import pandas as pd
 import azure.functions as func
 from azure.storage.blob import ContainerClient
@@ -30,6 +31,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     if xlsURI and csvSAS and xlsSAS:
 
+        xlsSAS = urllib.parse.quote(xlsSAS)
+        csvSAS = urllib.parse.quote(csvSAS)
+
         xls_container = xlsURI[:xlsURI.find('.net') + 5 + xlsURI[xlsURI.find('.net') + 5:].find('/')]
         xls_file = xlsURI[xlsURI.find('MISALES/') + 8:]
         xls_path = xlsURI[len(xls_container) + 1:xlsURI.find(xls_file)]
@@ -40,7 +44,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         return_dict['xls_container'] = xls_container
         return_dict['xls_file'] = xls_file
         return_dict['xls_path'] = xls_path
-        '''
+        
         if xls_file.upper().endswith('.XLS'):
 
             csv_file = xls_file[:-4] + '.csv'
@@ -90,7 +94,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     else:
         return_dict['func_return'] = False
-    '''
+    
     return func.HttpResponse(
         json.dumps(
             return_dict
