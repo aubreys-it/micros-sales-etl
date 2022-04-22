@@ -1,10 +1,14 @@
 import logging
 import json
-import urllib
 import pandas as pd
 import azure.functions as func
 from azure.storage.blob import ContainerClient
 from datetime import date
+
+def fixSAS(sas):
+    sas = sas.replace(':', '%3A')
+    sas = sas.replace('+', '%2B')
+    sas = sas.replace('=', '%3D')
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
@@ -31,8 +35,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     if xlsURI and csvSAS and xlsSAS:
 
-        xlsSAS = urllib.parse.quote(xlsSAS)
-        csvSAS = urllib.parse.quote(csvSAS)
+        xlsSAS = fixSAS(xlsSAS)
+        csvSAS = fixSAS(csvSAS)
 
         xls_container = xlsURI[:xlsURI.find('.net') + 5 + xlsURI[xlsURI.find('.net') + 5:].find('/')]
         xls_file = xlsURI[xlsURI.find('MISALES/') + 8:]
@@ -44,7 +48,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         return_dict['xls_container'] = xls_container
         return_dict['xls_file'] = xls_file
         return_dict['xls_path'] = xls_path
-        '''
+        #'''
         if xls_file.upper().endswith('.XLS'):
 
             csv_file = xls_file[:-4] + '.csv'
@@ -94,7 +98,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     else:
         return_dict['func_return'] = False
-    '''
+    #'''
     return func.HttpResponse(
         json.dumps(
             return_dict
