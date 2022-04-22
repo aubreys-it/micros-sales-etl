@@ -34,6 +34,13 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         xls_file = xlsURI[xlsURI.find('MISALES/') + 8:]
         xls_path = xlsURI[len(xls_container) + 1:xlsURI.find(xls_file)]
 
+        return_dict['xlsURI'] = xlsURI
+        return_dict['csvSAS'] = csvSAS
+        return_dict['xlsSAS'] = xlsSAS
+        return_dict['xls_container'] = xls_container
+        return_dict['xls_file'] = xls_file
+        return_dict['xls_path'] = xls_path
+        '''
         if xls_file.upper().endswith('.XLS'):
 
             csv_file = xls_file[:-4] + '.csv'
@@ -83,7 +90,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     else:
         return_dict['func_return'] = False
-
+    '''
     return func.HttpResponse(
         json.dumps(
             return_dict
