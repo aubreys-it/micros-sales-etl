@@ -88,7 +88,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
                 csv_container = ContainerClient.from_container_url(csvURI + csvSAS)
                 csv_client = csv_container.get_blob_client(csv_file)
-                csv_client.upload_blob(data=data_csv.to_csv(index=False, header=False))
+                csv_client.upload_blob(data=data_csv.to_csv(index=False, header=False, newline=''))
 
                 xls_container.delete_blob(xls_path + xls_file)
 
