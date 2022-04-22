@@ -8,8 +8,7 @@ from datetime import date
 def fixSAS(sas):
     sas = sas.replace(':', '%3A')
     sas = sas.replace('+', '%2B')
-    sas = sas.replace('=', '%3D')
-
+    
     return sas
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
@@ -50,7 +49,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         return_dict['xls_container'] = xls_container
         return_dict['xls_file'] = xls_file
         return_dict['xls_path'] = xls_path
-        '''
+        #'''
         if xls_file.upper().endswith('.XLS'):
 
             csv_file = xls_file[:-4] + '.csv'
@@ -97,7 +96,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 
             else:
                 return_dict['func_return'] = False
-    '''
+    #'''
     else:
         return_dict['func_return'] = False
     
