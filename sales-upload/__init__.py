@@ -61,7 +61,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         xlsSAS = fixSAS(xlsSAS)
         csvSAS = fixSAS(csvSAS)
 
-        xls_container = xlsURI[:xlsURI.find('.net') + 5 + xlsURI[xlsURI.find('.net') + 5:].find('/')]
+        xls_container_name = xlsURI[:xlsURI.find('.net') + 5 + xlsURI[xlsURI.find('.net') + 5:].find('/')]
         xls_file = xlsURI[xlsURI.find('MISALES/') + 8:]
         xls_path = xlsURI[len(xls_container) + 1:xlsURI.find(xls_file)]
 
@@ -79,13 +79,13 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             csv_rows = []
             row = []
 
-            xls_container = ContainerClient.from_container_url(xls_container + xlsSAS)
+            xls_container = ContainerClient.from_container_url(xls_container_name + xlsSAS)
             xls_client = xls_container.get_blob_client(xls_path + xls_file)
             xls_stream = xls_client.download_blob().content_as_bytes()
             data_xls = pd.read_excel(xls_stream)
 
             loc_id = xls_file[11:13]
-            return_dict['new_blob_path'] = xls_container + '/' + loc_dict[loc_id] + '/MISALES/' + xls_file
+            return_dict['new_blob_path'] = xls_container_name + '/' + loc_dict[loc_id] + '/MISALES/' + xls_file
 
             for col in data_xls.columns:
                 data_xls[col] = data_xls[col].astype('string')
