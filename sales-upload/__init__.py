@@ -20,6 +20,28 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     csvURI = "https://domesdaydiag.blob.core.windows.net/product-mix"
     return_dict = {}
 
+    loc_dict = {
+            '02': 'POWELL',
+            '03': 'SUNSPOT',
+            '04': 'CEDARBLUFF',
+            '05': 'MARYVILLE',
+            '06': 'HIXSON',
+            '08': 'LENOIRCITY',
+            '09': 'PAPERMILL',
+            '10': 'BISTRO',
+            '11': 'CLEVELAND',
+            '12': 'BLUETICK',
+            '13': 'OAKRIDGE',
+            '14': 'STRAWPLAINS',
+            '15': 'FIELDHOUSE',
+            '16': 'GREENEVILLE',
+            '17': 'BRISTOL',
+            '18': 'MORRISTOWN',
+            '21': 'JOHNSONCITY',
+            '22': 'HARDINVALLEY',
+            '23': 'SEVIERVILLE'
+    }
+
     if not xlsURI:
         try:
             req_body = req.get_json()
@@ -43,12 +65,13 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         xls_file = xlsURI[xlsURI.find('MISALES/') + 8:]
         xls_path = xlsURI[len(xls_container) + 1:xlsURI.find(xls_file)]
 
-        return_dict['xlsURI'] = xlsURI
-        return_dict['csvSAS'] = csvSAS
-        return_dict['xlsSAS'] = xlsSAS
-        return_dict['xls_container'] = xls_container
-        return_dict['xls_file'] = xls_file
-        return_dict['xls_path'] = xls_path
+        #return_dict['xlsURI'] = xlsURI
+        #return_dict['csvSAS'] = csvSAS
+        #return_dict['xlsSAS'] = xlsSAS
+        #return_dict['xls_container'] = xls_container
+        #return_dict['xls_file'] = xls_file
+        #return_dict['xls_path'] = xls_path
+        
         #'''
         if xls_file.upper().endswith('.XLS'):
 
@@ -62,6 +85,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             data_xls = pd.read_excel(xls_stream)
 
             loc_id = xls_file[11:13]
+            return_dict['new_blob_path'] = xls_container + '/' + loc_dict[loc_id] + '/MISALES/' + xls_file
 
             for col in data_xls.columns:
                 data_xls[col] = data_xls[col].astype('string')
