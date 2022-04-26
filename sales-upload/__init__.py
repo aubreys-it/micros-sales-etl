@@ -105,7 +105,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 loc_name = 'UNKNOWN'
 
             # Return full BLOB destination path + file name
-            return_dict['new_blob_path'] = xls_path + loc_name + '/MISALES/' + xls_file
+            return_dict['new_blob_path'] = '/calderwood/' + loc_name + '/MISALES/' + xls_file
 
             # Convert dataframe to string only data type
             for col in data_xls.columns:
