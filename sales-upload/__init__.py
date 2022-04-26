@@ -85,7 +85,11 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             data_xls = pd.read_excel(xls_stream)
 
             loc_id = xls_file[11:13]
-            return_dict['new_blob_path'] = xls_container_name + '/' + loc_dict[loc_id] + '/MISALES/' + xls_file
+            loc_name = loc_dict.get(loc_id)
+            if not loc_name:
+                loc_name = 'UNKNOWN'
+
+            return_dict['new_blob_path'] = xls_container_name + '/' + loc_name + '/MISALES/' + xls_file
 
             for col in data_xls.columns:
                 data_xls[col] = data_xls[col].astype('string')
