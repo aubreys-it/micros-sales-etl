@@ -63,7 +63,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
         xls_container_name = xlsURI[:xlsURI.find('.net') + 5 + xlsURI[xlsURI.find('.net') + 5:].find('/')]
         xls_file = xlsURI[xlsURI.find('MISALES/') + 8:]
-        xls_path = xlsURI[len(xls_container) + 1:xlsURI.find(xls_file)]
+        xls_path = xlsURI[len(xls_container_name) + 1:xlsURI.find(xls_file)]
 
         #return_dict['xlsURI'] = xlsURI
         #return_dict['csvSAS'] = csvSAS
