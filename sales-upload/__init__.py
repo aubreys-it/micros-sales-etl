@@ -139,13 +139,13 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 csv_client.upload_blob(data=data_csv.to_csv(index=False, header=False, line_terminator='\r\n'))
 
                 # Remove original BLOB
-                xls_container.delete_blob(xls_path + xls_file)
+                # xls_container.delete_blob(xls_path + xls_file)
 
                 return_dict['func_return'] = True   # Function successful
                 
             else:
                 return_dict['func_return'] = False  # Function not successful
-    #'''
+
     else:
         return_dict['func_return'] = False  # Function not successful
     
