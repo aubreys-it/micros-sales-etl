@@ -64,7 +64,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         except ValueError:
             pass
         else:
-            uri = req_body.get('uri')
+            xlsURI = req_body.get('uri')
 
     if not csvSAS:
         csvSAS = '?' + req_body.get('csvSAS').replace('_', '&')
