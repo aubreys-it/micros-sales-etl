@@ -155,7 +155,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 # Create new BLOB with CSV data
                 csv_container = ContainerClient.from_container_url(csvURI + csvSAS)
                 csv_client = csv_container.get_blob_client(csv_file)
-                csv_client.upload_blob(data=data_csv.to_csv(index=False, header=False, line_terminator='\r\n'))
+                if not csv_client.exists():
+                    csv_client.upload_blob(data=data_csv.to_csv(index=False, header=False, line_terminator='\r\n'))
 
                 # Remove original BLOB
                 # xls_container.delete_blob(xls_path + xls_file)
