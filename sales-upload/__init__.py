@@ -42,7 +42,6 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             '06': 'HIXSON',
             '08': 'LENOIRCITY',
             '09': 'PAPERMILL',
-            '10': 'BISTRO',
             '11': 'CLEVELAND',
             '12': 'BLUETICK',
             '13': 'OAKRIDGE',
@@ -51,6 +50,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             '16': 'GREENEVILLE',
             '17': 'BRISTOL',
             '18': 'MORRISTOWN',
+            '19': 'BISTRO',
             '21': 'JOHNSONCITY',
             '22': 'HARDINVALLEY',
             '23': 'SEVIERVILLE'
