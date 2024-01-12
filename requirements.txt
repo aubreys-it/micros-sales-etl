@@ -4,7 +4,7 @@
 
 azure-functions
 pandas
-azure-storage-blob
+azure-storage-blob==1.5.0
 datetime
 simplejson
 xlrd
