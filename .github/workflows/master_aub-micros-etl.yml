@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Python version
         uses: actions/setup-python@v1
@@ -33,15 +33,18 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements.txt
-        
+
       # Optional: Add step to run tests here
 
+      - name: Zip artifact for deployment
+        run: zip release.zip ./* -r
+
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: python-app
           path: |
-            . 
+            release.zip
             !venv/
 
   deploy:
@@ -50,14 +53,16 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-function.outputs.webapp-url }}
-
+    
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: python-app
-          path: .
 
+      - name: Unzip artifact for deployment
+        run: unzip release.zip     
+        
       - name: 'Deploy to Azure Functions'
         uses: Azure/functions-action@v1
         id: deploy-to-function
@@ -65,6 +70,6 @@ jobs:
           app-name: 'aub-micros-etl'
           slot-name: 'Production'
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_681D9540F6394AE8898DFD174031EF7B }}
           scm-do-build-during-deployment: true
           enable-oryx-build: true
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2D91A7905F134BBA8F83226506868875 }}
